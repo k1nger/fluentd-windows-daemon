@@ -2,19 +2,22 @@ FROM fluent/fluentd:v1.9.1-windows-1.0
 
 LABEL maintainer="Ryan King"
 WORKDIR C:\\fluentd
-ENV PATH C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0\\bin;%PATH%
+RUN echo %PATH%
+ENV PATH %PATH%;C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0\\bin;
 ENV GEM_PATH C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0
 ENV GEM_HOME C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0
+RUN echo %PATH%
 
 # skip runtime bundler installation
 ENV FLUENTD_DISABLE_BUNDLER_INJECTION 1
 
 COPY Gemfile* C:\\fluentd
-RUN %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 RUN choco install -y ruby --version 2.6.5.1 --params "'/InstallDir:C:\\ruby26'" \
   && choco install -y msys2 --params "'/NoPath /NoUpdate /InstallDir:C:\\ruby26\\msys64'"
 
-RUN ridk install 2 3 \
+RUN refreshenv \
+  && ridk install 2 3 \
   && echo gem: --no-document >> C:\ProgramData\gemrc \
   && gem install bundler --version 1.16.2 \
   && bundle config silence_root_warning true \
