@@ -30,7 +30,7 @@ RUN %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell -Command "Remove-Ite
 COPY .\\conf\\fluent.conf C:\\fluentd\\etc
 COPY .\\conf\\kubernetes.conf C:\\fluentd\\etc
 COPY .\\plugins C:\\fluentd\\plugins
-RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -Type Directory -Path 'C:\\fluentd\\etc' -Force"
+RUN mkdir C:\\fluentd\\etc
 RUN echo '' > C:\\fluentd\\etc\\disable.conf
 
 ENV FLUENTD_CONF="fluent.conf"
