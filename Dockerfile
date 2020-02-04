@@ -4,7 +4,7 @@ LABEL maintainer="Ryan King"
 WORKDIR C:\\fluentd
 
 RUN echo %PATH%
-RUN setx PATH "%PATH%;C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0\\bin;"
+RUN setx PATH "%PATH%;C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0\\bin;C:\\ruby26\\bin"
 RUN setx GEM_PATH "C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0"
 RUN setx GEM_HOME "C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0"
 RUN echo %PATH%
@@ -17,6 +17,7 @@ RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex (
 RUN choco install -y ruby --version 2.6.5.1 --params "'/InstallDir:C:\\ruby26'" \
   && choco install -y msys2 --params "'/NoPath /NoUpdate /InstallDir:C:\\ruby26\\msys64'"
 
+RUN powershell -Command "dir C:\\ruby26"
 RUN refreshenv
 RUN ridk install 2 3
 RUN echo gem: --no-document >> C:\\ProgramData\\gemrc
