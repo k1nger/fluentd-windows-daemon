@@ -2,10 +2,11 @@ FROM fluent/fluentd:v1.9.1-windows-1.0
 
 LABEL maintainer="Ryan King"
 WORKDIR C:\\fluentd
+
 RUN echo %PATH%
-ENV PATH %PATH%;C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0\\bin;
-ENV GEM_PATH C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0
-ENV GEM_HOME C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0
+RUN setx PATH "%PATH%;C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0\\bin;"
+RUN setx GEM_PATH "C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0"
+RUN setx GEM_HOME "C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0"
 RUN echo %PATH%
 
 # skip runtime bundler installation
