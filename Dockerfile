@@ -27,10 +27,10 @@ RUN setx GEM_HOME "C:\\fluentd\\vendor\\bundle\\ruby\\2.6.0"
 # Remove gem cache and chocolatey
 RUN %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell -Command "Remove-Item -Force C:\\ruby26\\lib\\ruby\\gems\\2.6.0\\cache\\*.gem; Remove-Item -Recurse -Force 'C:\\ProgramData\\chocolatey'"
 
-COPY .\conf\fluent.conf C:\fluentd\etc
-COPY .\conf\kubernetes.conf C:\fluentd\etc
-COPY plugins C:\fluentd\plugins
-RUN %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -Type File -Path 'C:\\fluentd\\etc\\disable.conf' -Force"
+COPY .\\conf\\fluent.conf C:\\fluentd\\etc
+COPY .\\conf\\kubernetes.conf C:\\fluentd\\etc
+COPY .\\plugins C:\\fluentd\\plugins
+RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -Type File -Path 'C:\\fluentd\\etc\\disable.conf' -Force"
 
 ENV FLUENTD_CONF="fluent.conf"
 
