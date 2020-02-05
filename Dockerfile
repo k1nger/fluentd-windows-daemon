@@ -1,4 +1,4 @@
-FROM fluent/fluentd:v1.9.1-windows-1.0
+FROM 294847794149.dkr.ecr.us-east-2.amazonaws.com/fluentd-windows
 
 LABEL maintainer="Ryan King"
 WORKDIR C:\\fluentd
