@@ -76,7 +76,7 @@ spec:
         - name: varlog
           mountPath: /var/log
         - name: varlibdockercontainers
-          mountPath: /var/lib/docker/containers
+          mountPath: C:\ProgramData\Docker\containers
           readOnly: true
       nodeSelector:
         beta.kubernetes.io/os: windows
