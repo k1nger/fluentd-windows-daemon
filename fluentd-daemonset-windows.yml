@@ -64,6 +64,8 @@ spec:
             value: "kubernetes-logs"
           - name: AWS_REGION
             value: "us-east-2"
+          - name: CLUSTER_NAME
+            value: edm-eks-test
         resources:
           limits:
             memory: 1024Mi
