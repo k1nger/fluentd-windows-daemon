@@ -1,0 +1,83 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fluentd
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: fluentd
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: fluentd
+roleRef:
+  kind: ClusterRole
+  name: fluentd
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: fluentd
+  namespace: kube-system
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: fluentd-windows
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-windows-logging
+    version: v1
+spec:
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: us-east-1a.staging.kubernetes.ruist.io-service-role
+      labels:
+        k8s-app: fluentd-windows-logging
+        version: v1
+    spec:
+      serviceAccount: fluentd
+      serviceAccountName: fluentd
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: fluentd-windows
+        image: 294847794149.dkr.ecr.us-east-2.amazonaws.com/fluentd-windows-daemonset:latest
+        env:
+          - name: LOG_GROUP_NAME
+            value: "kubernetes-logs"
+          - name: AWS_REGION
+            value: "us-east-2"
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: varlibdockercontainers
+        hostPath:
+          path: C:\ProgramData\Docker\containers
