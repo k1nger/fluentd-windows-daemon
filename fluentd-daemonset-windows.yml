@@ -66,10 +66,10 @@ spec:
             value: "us-east-2"
         resources:
           limits:
-            memory: 200Mi
+            memory: 1024Mi
           requests:
             cpu: 100m
-            memory: 200Mi
+            memory: 1024Mi
         volumeMounts:
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
