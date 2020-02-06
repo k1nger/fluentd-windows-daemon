@@ -29,9 +29,7 @@ RUN powershell -Command "Remove-Item -Force C:\\ruby26\\lib\\ruby\\gems\\2.6.0\\
 
 COPY .\\conf\\fluent.conf C:\\fluent\\conf\\fluent.conf
 COPY .\\conf\\kubernetes.conf C:\\fluent\\conf\\kubernetes.conf
-COPY .\\plugins C:\\fluent\\conf\\plugins
+COPY .\\plugins C:\\fluent\\plugin
 # RUN echo '' > C:\\fluent\\etc\\disable.conf
 
-ENV FLUENTD_CONF="fluent.conf"
-
-ENTRYPOINT ["cmd", "/k", "fluentd", "-c", "C:\\fluent\\conf\\fluent.conf"]
+ENTRYPOINT ["cmd", "/k", "fluentd", "-c", "C:\\fluent\\conf\\fluent.conf", "-p", "C:\\fluent\\plugin"]
