@@ -27,8 +27,7 @@ RUN setx GEM_HOME "C:\\fluent\\vendor\\bundle\\ruby\\2.6.0"
 # Remove gem cache and chocolatey
 RUN powershell -Command "Remove-Item -Force C:\\ruby26\\lib\\ruby\\gems\\2.6.0\\cache\\*.gem; Remove-Item -Recurse -Force 'C:\\ProgramData\\chocolatey'"
 
-COPY .\\conf\\fluent.conf C:\\fluent\\conf\\fluent.conf
-COPY .\\conf\\kubernetes.conf C:\\fluent\\conf\\kubernetes.conf
+COPY .\\conf C:\\fluent\\conf
 COPY .\\plugins C:\\fluent\\plugin
 # RUN echo '' > C:\\fluent\\etc\\disable.conf
 
