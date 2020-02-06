@@ -73,6 +73,8 @@ spec:
             cpu: 100m
             memory: 1024Mi
         volumeMounts:
+        - name: varlog
+          mountPath: /var/log
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
           readOnly: true
@@ -80,6 +82,9 @@ spec:
         beta.kubernetes.io/os: windows
       terminationGracePeriodSeconds: 30
       volumes:
+      - name: varlog
+        hostPath:
+          path: C:\var\log
       - name: varlibdockercontainers
         hostPath:
           path: C:\ProgramData\Docker\containers
