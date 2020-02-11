@@ -58,14 +58,14 @@ spec:
         effect: NoSchedule
       containers:
       - name: fluentd-windows
-        image: 294847794149.dkr.ecr.us-east-2.amazonaws.com/fluentd-windows-daemonset:latest
+        image: #fluentd-windows-daemonset image
         env:
           - name: LOG_GROUP_NAME
-            value: "kubernetes-logs"
+            value: #cloudwatch log group
           - name: AWS_REGION
-            value: "us-east-2"
+            value: #aws region for cluster
           - name: CLUSTER_NAME
-            value: edm-eks-test
+            value: #cluster to deploy to
         resources:
           limits:
             memory: 1024Mi
